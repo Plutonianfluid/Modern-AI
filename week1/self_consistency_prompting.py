@@ -7,9 +7,9 @@ from ollama import chat
 load_dotenv()
 
 NUM_RUNS_TIMES = 5
-
+# What should the System_Prompt be?
 # TODO: Fill this in! Try to get as close to 100% correctness across all runs as possible.
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = "You are a very smart robot and will be given a math problem. Look carefully at the problem and you will be given 5 chances to answer the question. Then you will take the aggregate answer of the highest frequency as your final answer."
 
 USER_PROMPT = """
 Solve this problem, then give the final answer on the last line as "Answer: <number>".

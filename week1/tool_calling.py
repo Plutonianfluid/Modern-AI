@@ -70,7 +70,21 @@ TOOL_REGISTRY: Dict[str, Callable[..., str]] = {
 # ==========================
 
 # TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """You are an intelligent robot with capabilities to solve many problems. You will be given a problem to solve and here are some tools you can use: output_every_func_return_type.
+
+Tool: Return a newline-delimited list of "name: return_type" for each top-level function.
+The tool is as follows: def output_every_func_return_type(file_path: str = None) -> str:
+    path = file_path or __file__
+    if not os.path.isabs(path):
+        # Try file relative to this script if not absolute
+        candidate = os.path.join(os.path.dirname(__file__), path)
+        if os.path.exists(candidate):
+            path = candidate
+    pairs = _list_function_return_types(path)
+    return "\n".join(f"{name}: {ret}" for name, ret in pairs)
+output_every_func_return_type(file_path: str = "") -> str
+"""
+
 
 
 def resolve_path(p: str) -> str:

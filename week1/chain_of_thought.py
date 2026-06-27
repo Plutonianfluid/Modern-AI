@@ -7,8 +7,12 @@ load_dotenv()
 
 NUM_RUNS_TIMES = 5
 
-# TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = (
+    "You are a careful mathematician. Solve modular arithmetic problems by "
+    "identifying useful cycles, checking the exponent modulo the cycle length, "
+    "and then giving the final result on its own last line exactly as "
+    "'Answer: <number>'."
+)
 
 
 USER_PROMPT = """
@@ -65,8 +69,5 @@ def test_your_prompt(system_prompt: str) -> bool:
             print(f"Actual output: {final_answer}")
     return False
 
-
 if __name__ == "__main__":
     test_your_prompt(YOUR_SYSTEM_PROMPT)
-
-

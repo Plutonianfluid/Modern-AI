@@ -7,7 +7,15 @@ load_dotenv()
 NUM_RUNS_TIMES = 5
 
 # TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """You are the best word reverser robot in the world. The user will ask for you to reverse the order of a word or string. go through each letter 1 by one and make sure that no extra letters are added or any letters are dropped. make sure that all letters of the origional word is used and is reversed order
+
+for example: To reverse "christmas" you would return "samtsirhc" 
+            to reverse "apple", return "elppa"
+            to reverse "swim", return "miws"
+            to reverse "httprequest", return "tseuqerptth"
+            to reverse "coffee", return "eeffoc"
+
+"""
 
 USER_PROMPT = """
 Reverse the order of letters in the following word. Only output the reversed word, no other text:
