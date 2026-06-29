@@ -26,6 +26,8 @@ line 33: "content": "You extract action items from notes. Return only concrete t
 
 the framework was from ollama's json website in assignment.md
 
+everythiing else was handwritten
+
 ### Exercise 2: Add Unit Tests
 Prompt: Write unit tests for `extract_action_items_llm()` covering multiple inputs (e.g., bullet lists, keyword-prefixed lines, empty input) in `week2/tests/test_extract.py`.
 
@@ -109,6 +111,10 @@ def test_extract_deduplicates_items_case_insensitively():
     items = extract_action_items(text)
 
     assert items == ["Write tests"]
+
+These tests check different things including checking if it reutrns a list[str], handles bullet lists, keyword-prefixed lines such as TODO:, return an empty list for empty input, and deals with bad output from Ollama.
+
+to run test_extract.py, run: poetry run pytest week2/tests/test_extract.py
 
 ### Exercise 3: Refactor Existing Code for Clarity
 Prompt: Give me a detailed plan for the 3rd todo of the assignment and a framework for me to follow but do not do any implementing without my permission
@@ -199,6 +205,12 @@ class MarkDoneResponse(BaseModel):
     id: int
     done: bool
 
+changes focuses on the 4 things outlined in assignment.md: API contracts, Database layer, App lifecycle, and error handling
+
+Changed API Schemas to be explicit rather than having the routers accept raw dictionaries
+
+Create helper functions for cleaner readibility
+
 
 ### Exercise 4: Use Agentic Mode to Automate a Small Task
 Prompt: give a detailed plan for TODO number 4
@@ -249,12 +261,34 @@ $('#extract_llm').addEventListener('click', () => {
         }
       });
 
+Added a new backend endpoint for LLM-extractor:
+    POST /action-items/extract
+    POST /action-items/extract-llm
+    GET  /action-items
+    POST /action-items/{id}/done
+    POST /notes
+    GET  /notes
+    GET  /notes/{id}
+
+    added this in action_items.py: @router.post("/extract-llm", response_model=ExtractActionItemsResponse)
+
+Added frontend buttons for Extract LLM and List Notes
+    in index.html: 
+    <button id="extract">Extract<button>
+    <button id="extract_llm">Extract LLM</button>
+
+    For List Notes:
+    
+    @router.get("", response_model=list[NoteResponse])
+    def list_all_notes() -> list[NoteResponse]:
+        return [NoteResponse(**note) for note in db.list_notes()]
 
 ### Exercise 5: Generate a README from the Codebase
 Prompt: Generate a README from the Codebase
 
 Generated Code Snippets:
-README.md file
+
+Generated README.md file
 
 
 ## SUBMISSION INSTRUCTIONS
