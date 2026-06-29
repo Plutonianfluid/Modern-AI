@@ -2,12 +2,14 @@ from __future__ import annotations
 
 import sqlite3
 from pathlib import Path
-from typing import Optional
-
+from typing import Any
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = BASE_DIR / "data"
 DB_PATH = DATA_DIR / "app.db"
+
+NoteRecord = dict[str, Any]
+ActionItemRecord = dict[str, Any]
 
 
 def ensure_data_directory_exists() -> None:
@@ -49,6 +51,24 @@ def init_db() -> None:
         connection.commit()
 
 
+def serialize_note(row: sqlite3.Row) -> NoteRecord:
+    return {
+        "id": row["id"],
+        "content": row["content"],
+        "created_at": row["created_at"],
+    }
+
+
+def serialize_action_item(row: sqlite3.Row) -> ActionItemRecord:
+    return {
+        "id": row["id"],
+        "note_id": row["note_id"],
+        "text": row["text"],
+        "done": bool(row["done"]),
+        "created_at": row["created_at"],
+    }
+
+
 def insert_note(content: str) -> int:
     with get_connection() as connection:
         cursor = connection.cursor()
@@ -57,14 +77,14 @@ def insert_note(content: str) -> int:
         return int(cursor.lastrowid)
 
 
-def list_notes() -> list[sqlite3.Row]:
+def list_notes() -> list[NoteRecord]:
     with get_connection() as connection:
         cursor = connection.cursor()
         cursor.execute("SELECT id, content, created_at FROM notes ORDER BY id DESC")
-        return list(cursor.fetchall())
+        return [serialize_note(row) for row in cursor.fetchall()]
 
 
-def get_note(note_id: int) -> Optional[sqlite3.Row]:
+def get_note(note_id: int) -> NoteRecord | None:
     with get_connection() as connection:
         cursor = connection.cursor()
         cursor.execute(
@@ -72,10 +92,12 @@ def get_note(note_id: int) -> Optional[sqlite3.Row]:
             (note_id,),
         )
         row = cursor.fetchone()
-        return row
+        if row is None:
+            return None
+        return serialize_note(row)
 
 
-def insert_action_items(items: list[str], note_id: Optional[int] = None) -> list[int]:
+def insert_action_items(items: list[str], note_id: int | None = None) -> list[int]:
     with get_connection() as connection:
         cursor = connection.cursor()
         ids: list[int] = []
@@ -89,7 +111,7 @@ def insert_action_items(items: list[str], note_id: Optional[int] = None) -> list
         return ids
 
 
-def list_action_items(note_id: Optional[int] = None) -> list[sqlite3.Row]:
+def list_action_items(note_id: int | None = None) -> list[ActionItemRecord]:
     with get_connection() as connection:
         cursor = connection.cursor()
         if note_id is None:
@@ -101,10 +123,10 @@ def list_action_items(note_id: Optional[int] = None) -> list[sqlite3.Row]:
                 "SELECT id, note_id, text, done, created_at FROM action_items WHERE note_id = ? ORDER BY id DESC",
                 (note_id,),
             )
-        return list(cursor.fetchall())
+        return [serialize_action_item(row) for row in cursor.fetchall()]
 
 
-def mark_action_item_done(action_item_id: int, done: bool) -> None:
+def mark_action_item_done(action_item_id: int, done: bool) -> bool:
     with get_connection() as connection:
         cursor = connection.cursor()
         cursor.execute(
@@ -112,5 +134,4 @@ def mark_action_item_done(action_item_id: int, done: bool) -> None:
             (1 if done else 0, action_item_id),
         )
         connection.commit()
-
-
+        return cursor.rowcount > 0
