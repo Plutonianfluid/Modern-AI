@@ -1,23 +1,23 @@
 # Week 4 — The Autonomous Coding Agent IRL
 
-This week, your task is to build at least **2 automations** for this repository of a coding agent of your choice.
-For simplicity, this assigment assumes you're using Claude Code, but you can search online for the equivalent in your coding agent:
+This week, your task is to build at least **2 automations** for this repository using Codex.
+The Codex automation options are:
 
-- Custom slash commands (checked into  `.claude/commands/*.md`)
+- Codex skills or custom prompts for reusable workflows
 
-- `CLAUDE.md` files for repository or context guidance
+- `AGENTS.md` files for repository or context guidance
 
-- Claude SubAgents (role-specialized agents working together)
+- Codex subagents/custom agents (role-specialized agents working together)
 
-- MCP servers integrated into Claude Code
+- MCP servers integrated into Codex
 
-Your automations should meaningfully improve a developer workflow – for example, by streamlining tests, documentation, refactors, or data-related tasks. You will then use the automations you create to expand upon the starter application found in `week4/`.
+Your automations should meaningfully improve a developer workflow - for example, by streamlining tests, documentation, refactors, or data-related tasks. You will then use the automations you create to expand upon the starter application found in `week4/`.
 
-These are some resources you can read to understand Claude Code more and its automation options:
+These are some resources you can read to understand Codex more and its automation options:
 
-1. **Claude Code best practices:** [anthropic.com/engineering/claude-code-best-practices](https://www.anthropic.com/engineering/claude-code-best-practices)
+1. **Codex docs:** [developers.openai.com/codex](https://developers.openai.com/codex)
 
-2. **SubAgents overview:** [docs.anthropic.com/en/docs/claude-code/sub-agents](https://docs.anthropic.com/en/docs/claude-code/sub-agents)
+2. **AGENTS.md guidance:** [agents.md](https://agents.md)
 
 ## Explore the Starter Application
 Minimal full‑stack starter application designed to be a **"developer's command center"**. 
@@ -27,7 +27,7 @@ Minimal full‑stack starter application designed to be a **"developer's command
 - Pre-commit (black + ruff)
 - Tasks to practice agent-driven workflows
 
-Use this application as your playground to experiment with the Claude automations you build.
+Use this application as your playground to experiment with the Codex automations you build.
 
 ### Structure
 
@@ -74,8 +74,8 @@ Now that you’re familiar with the starter application, your next step is to bu
 
 As you build your automations, document your changes in the `writeup.md` file. Leave the *"How you used the automation to enhance the starter application"* section empty for now - you will be returning to this in Part II of the assignment.
 
-### A) Claude custom slash commands
-Slash commands are a feature for repeated workflows, letting you create reusable workflows in Markdown files inside `.claude/commands/`. Claude exposes these via `/`.
+### A) Codex skills or custom prompts
+Codex skills and custom prompts are features for repeated workflows. Skills are preferred for reusable, shareable task behavior; custom prompts can expose local reusable prompts through `/prompts:name`.
 
 
 - Example 1: Test runner with coverage
@@ -92,10 +92,10 @@ Slash commands are a feature for repeated workflows, letting you create reusable
   - Intent: Rename a module (e.g., `services/extract.py` → `services/parser.py`), update imports, run lint/tests.
   - Output: A checklist of modified files and verification steps.
 
->*Tips: Keep commands focused, use `$ARGUMENTS`, and prefer idempotent steps. Consider allowlisting safe tools and using headless mode for repeatability.*
+>*Tips: Keep workflows focused, use arguments where appropriate, and prefer idempotent steps. Consider allowlisting safe tools and using non-interactive mode for repeatability.*
 
-### B) `CLAUDE.md` guidance files
-The `CLAUDE.md` file is automatically read when starting a conversation, allowing you to provide repository-specific instructions, context, or guidance that influence Claude's behavior. Create a `CLAUDE.md` in the repo root (and optionally in `week4/` subfolders) to guide Claude’s behavior.
+### B) `AGENTS.md` guidance files
+Codex reads `AGENTS.md` files when starting a session, allowing you to provide repository-specific instructions, context, or guidance that influence Codex's behavior. Create an `AGENTS.md` in the repo root (and optionally in `week4/` subfolders) to guide Codex's behavior.
 
 - Example 1: Code navigation and entry points
   - Include: How to run the app, where routers live (`backend/app/routers`), where tests live, how the DB is seeded.
@@ -104,11 +104,11 @@ The `CLAUDE.md` file is automatically read when starting a conversation, allowin
 - Example 3: Workflow snippets
   - Include: “When asked to add an endpoint, first write a failing test, then implement, then run pre-commit.”
 
-> *Tips: Iterate on `CLAUDE.md` like a prompt, keep it concise and actionable, and document custom tools/scripts you expect Claude to use.*
+> *Tips: Iterate on `AGENTS.md` like a prompt, keep it concise and actionable, and document custom tools/scripts you expect Codex to use.*
 
-### C) SubAgents (role-specialized)
+### C) Codex subagents/custom agents (role-specialized)
 
-SubAgents are specialized AI assistants configured to handle specific tasks with their own system prompts, tools, and context. Design two or more cooperating agents, each responsible for a distinct step in a single workflow.
+Subagents/custom agents are specialized AI assistants configured to handle specific tasks with their own system prompts, tools, and context. Design two or more cooperating agents, each responsible for a distinct step in a single workflow.
 
 - Example 1: TestAgent + CodeAgent
   - Flow: TestAgent writes/updates tests for a change → CodeAgent implements code to pass tests → TestAgent verifies.
@@ -127,9 +127,10 @@ e.g. If you implemented the custom slash command `/generate-test-cases`, explain
 
 ## Deliverables
 1) Two or more automations, which may include:
-   - Slash commands in `.claude/commands/*.md`
-   - `CLAUDE.md` files
-   - SubAgent prompts/configuration (documented clearly, files/scripts if any)
+  - Codex skills or custom prompts
+  - `AGENTS.md` files
+  - Codex subagent/custom agent prompts/configuration (documented clearly, files/scripts if any)
+  - MCP server configuration for Codex, if used
 
 2) A write-up `writeup.md` under `week4/` that includes:
   - Design inspiration (e.g. cite the best-practices and/or sub-agents docs)
@@ -137,5 +138,3 @@ e.g. If you implemented the custom slash command `/generate-test-cases`, explain
   - How to run it (exact commands), expected outputs, and rollback/safety notes
   - Before vs. after (i.e. manual workflow vs. automated workflow)
   - How you used the automation to enhance the starter application
-
-
