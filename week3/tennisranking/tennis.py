@@ -19,7 +19,6 @@ headers = {
 }
 
 @mcp.tool()
-@mcp.tool()
 def get_singles_rankings(tour: str = "wta", limit: int = 5) -> list[dict[str, Any]]:
     try:
         response = httpx.get(f"https://{API_HOST}/tennis/v2/{tour}/ranking/singles/", headers=headers)
