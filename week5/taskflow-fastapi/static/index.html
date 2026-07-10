@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Study Task Board API</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="workspace" aria-labelledby="app-title">
+        <div class="topbar">
+          <div>
+            <p class="eyebrow">FastAPI + SQLite</p>
+            <h1 id="app-title">Study Task Board</h1>
+          </div>
+          <div class="stats">
+            <span><strong id="total-count">0</strong> total</span>
+            <span><strong id="open-count">0</strong> open</span>
+          </div>
+        </div>
+
+        <form id="task-form" class="task-form" novalidate>
+          <input type="hidden" id="task-id" />
+          <label>
+            Task title
+            <input id="title" maxlength="80" required placeholder="Build second stack" />
+          </label>
+          <label>
+            Course area
+            <select id="category">
+              <option value="Reading">Reading</option>
+              <option value="Coding">Coding</option>
+              <option value="Writing">Writing</option>
+              <option value="Review">Review</option>
+            </select>
+          </label>
+          <label>
+            Priority
+            <select id="priority">
+              <option value="Low">Low</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="High">High</option>
+            </select>
+          </label>
+          <label class="wide">
+            Notes
+            <textarea id="notes" maxlength="220" placeholder="What needs to happen next?"></textarea>
+          </label>
+          <p id="form-error" class="error" role="alert"></p>
+          <div class="actions">
+            <button type="submit" id="save-button">Add task</button>
+            <button type="button" id="cancel-button" class="secondary" hidden>Cancel edit</button>
+          </div>
+        </form>
+
+        <section id="task-list" class="task-list" aria-live="polite"></section>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

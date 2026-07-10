@@ -9,7 +9,7 @@ You may reuse the app from previous weeks (the "developer control center") or cr
 - User can create, read, update, and delete a primary resource (e.g., notes, tasks, posts).
 - Persistent storage (database or file-based) where appropriate for the stack.
 - Basic validation and error handling.
-- Simple but functional UI that surfaces the main flows.
+- Simple but functional UI that surfacesd the main flows.
 - Clear instructions to run each version locally (and deploy links if you deploy).
 
 ## Stack Requirements
