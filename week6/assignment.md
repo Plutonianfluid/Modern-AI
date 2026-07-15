@@ -60,7 +60,7 @@ make lint
 ## Part I: Build Your Automation (Choose 2 or more) 
 Select **5 tasks** from `week6/docs/TASKS.md` to implement. Your implementation must leverage Warp in both of the following ways (more details below):
 
-- A) Use Warp Drive features — such as saved prompts, rules, or MCP servers.
+- (A) Use Warp Drive features — such as saved prompts, rules, or MCP servers.
 - (B) Incorporate multi-agent workflows within Warp.
 
 Keep your changes focused on backend, frontend, logic, or tests inside `week6/`.

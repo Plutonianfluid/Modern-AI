@@ -17,7 +17,13 @@
           <input id="note-content" placeholder="Content" required />
           <button type="submit">Add</button>
         </form>
+        <div class="toolbar">
+          <input id="note-search" placeholder="Search notes" />
+          <select id="note-sort"><option value="created_desc">Newest first</option><option value="title_asc">Title A–Z</option></select>
+          <span id="note-count"></span>
+        </div>
         <ul id="notes"></ul>
+        <div class="pager"><button id="notes-prev">Previous</button><span id="notes-page"></span><button id="notes-next">Next</button></div>
       </section>
 
       <section>
@@ -26,7 +32,12 @@
           <input id="action-desc" placeholder="Description" required />
           <button type="submit">Add</button>
         </form>
+        <div class="toolbar">
+          <select id="action-filter"><option value="">All</option><option value="false">Open</option><option value="true">Completed</option></select>
+          <button id="bulk-complete">Complete selected</button><span id="action-count"></span>
+        </div>
         <ul id="actions"></ul>
+        <div class="pager"><button id="actions-prev">Previous</button><span id="actions-page"></span><button id="actions-next">Next</button></div>
       </section>
     </main>
 
