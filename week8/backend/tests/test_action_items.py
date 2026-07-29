@@ -55,3 +55,29 @@ def test_action_items_pagination_sorting_and_filtering(client):
     assert client.get("/action-items/", params={"skip": -1}).status_code == 422
     assert client.get("/action-items/", params={"limit": 201}).status_code == 422
     assert client.get("/action-items/", params={"sort": "project"}).status_code == 422
+
+
+def test_project_and_completion_filters_work_with_pagination(client):
+    project = client.post("/projects/", json={"name": "Filtered project"}).json()
+    item_ids = []
+    for description in ("One", "Two", "Three"):
+        item = client.post(
+            "/action-items/",
+            json={"description": description, "project_id": project["id"]},
+        ).json()
+        item_ids.append(item["id"])
+
+    client.patch(f"/action-items/{item_ids[0]}", json={"completed": True})
+    response = client.get(
+        "/action-items/",
+        params={
+            "project_id": project["id"],
+            "completed": False,
+            "sort": "id",
+            "skip": 1,
+            "limit": 1,
+        },
+    )
+
+    assert response.status_code == 200
+    assert [item["id"] for item in response.json()] == [item_ids[2]]

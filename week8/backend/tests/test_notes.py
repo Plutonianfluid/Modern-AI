@@ -53,3 +53,15 @@ def test_notes_pagination_sorting_and_invalid_parameters(client):
     assert client.get("/notes/", params={"skip": -1}).status_code == 422
     assert client.get("/notes/", params={"limit": 0}).status_code == 422
     assert client.get("/notes/", params={"sort": "not_a_column"}).status_code == 422
+
+
+def test_notes_pagination_is_stable_when_sort_values_match(client):
+    created_ids = [
+        client.post("/notes/", json={"title": "Same", "content": str(index)}).json()["id"]
+        for index in range(4)
+    ]
+
+    first_page = client.get("/notes/", params={"sort": "title", "limit": 2}).json()
+    second_page = client.get("/notes/", params={"sort": "title", "skip": 2, "limit": 2}).json()
+
+    assert [note["id"] for note in first_page + second_page] == created_ids
