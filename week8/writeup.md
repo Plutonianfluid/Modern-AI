@@ -24,9 +24,10 @@ b. PR Description
 > (7 passed at this stack layer) and `poetry run ruff check .` (passed).
 
 c. Graphite Diamond generated code review
-> Graphite AI review is running on
-> [PR #1](https://app.graphite.com/github/pr/Plutonianfluid/Modern-AI/1).
-> Its specific comments and my dispositions will be recorded after it completes.
+> Graphite completed its review of
+> [PR #1](https://app.graphite.com/github/pr/Plutonianfluid/Modern-AI/1) and
+> reported **“Graphite found no issues.”** It left no inline comments, so no
+> Graphite-requested changes were needed.
 
 ## Task 2: Extend extraction logic
 a. Links to relevant commits/issues
@@ -44,9 +45,10 @@ b. PR Description
 > items, background text, and empty input. The stack passes 9 tests at this layer.
 
 c. Graphite Diamond generated code review
-> Graphite AI review is running on
-> [PR #2](https://app.graphite.com/github/pr/Plutonianfluid/Modern-AI/2).
-> Its specific comments and my dispositions will be recorded after it completes.
+> Graphite completed its review of
+> [PR #2](https://app.graphite.com/github/pr/Plutonianfluid/Modern-AI/2) and
+> reported **“Graphite found no issues.”** It left no inline comments, so no
+> Graphite-requested changes were needed.
 
 ## Task 3: Try adding a new model and relationships
 a. Links to relevant commits/issues
@@ -65,9 +67,10 @@ b. PR Description
 > The stack passes 11 tests at this layer.
 
 c. Graphite Diamond generated code review
-> Graphite AI review is running on
-> [PR #3](https://app.graphite.com/github/pr/Plutonianfluid/Modern-AI/3).
-> A useful focus is relationship lifecycle behavior and database migrations.
+> Graphite completed its review of
+> [PR #3](https://app.graphite.com/github/pr/Plutonianfluid/Modern-AI/3) and
+> reported **“Graphite found no issues.”** It left no inline comments, including
+> none about relationship lifecycle behavior or database migrations.
 
 ## Task 4: Improve tests for pagination and sorting
 a. Links to relevant commits/issues
@@ -83,9 +86,10 @@ b. PR Description
 > The complete backend suite passes with 13 tests.
 
 c. Graphite Diamond generated code review
-> Graphite AI review is running on
-> [PR #4](https://app.graphite.com/github/pr/Plutonianfluid/Modern-AI/4).
-> Its specific comments and my dispositions will be recorded after it completes.
+> Graphite completed its review of
+> [PR #4](https://app.graphite.com/github/pr/Plutonianfluid/Modern-AI/4) and
+> reported **“Graphite found no issues.”** It left no inline comments, so no
+> Graphite-requested changes were needed.
 
 ## Brief Reflection 
 a. The types of comments you typically made in your manual reviews (e.g., correctness, performance, security, naming, test gaps, API shape, UX, docs).
@@ -97,25 +101,26 @@ a. The types of comments you typically made in your manual reviews (e.g., correc
 > and that repeated extracted actions did not create duplicates.
 
 b. A comparison of **your** comments vs. **Graphite’s** AI-generated comments for each PR.
-> The PRs are now hosted and Graphite's reviews are running, so the final
-> comment-by-comment comparison is pending completion. For Task 1, my manual review
-> found that permissive `hasattr` sorting silently fell back on bad input; this was
-> changed to an explicit allowlist and a 422 response. For Task 2, I focused on
-> false positives and preservation of input order. For Task 3, I focused on missing
-> project IDs, nullable assignment, and duplicate names. For Task 4, I focused on
-> page boundaries, sort direction, filters, and invalid parameters. After Graphite
-> runs, each of its comments should be compared against these observations and
-> marked accepted, rejected, or duplicate.
+> Graphite reported no issues on all four PRs, while my manual review produced
+> concrete observations for every task. For Task 1, I found that permissive
+> `hasattr` sorting silently accepted bad input, so I changed it to an explicit
+> allowlist and a 422 response. For Task 2, I checked false positives, completed
+> checkboxes, duplicate actions, and preservation of input order. For Task 3, I
+> checked missing project IDs, nullable assignment, duplicate names, and backward
+> compatibility. For Task 4, I checked page boundaries, stable ordering when sort
+> values match, combined filters, and invalid parameters. Graphite provided useful
+> independent confirmation but no additional comments to accept, reject, or mark
+> as duplicates.
 
 c. When the AI reviews were better/worse than yours (cite specific examples)
-> Graphite has not run, so claiming that it was better or worse would be
-> unsupported. My strongest manual finding was the unstable/permissive sort
-> behavior: invalid fields were silently accepted and equal values lacked a stable
-> tie-breaker. Likely AI-review targets include the absence of a database migration
-> for existing installations and the unspecified project-deletion policy. If
-> Graphite identifies either, that would be a valuable systems-level comment; if it
-> only restates validation already covered by tests, the manual review was more
-> useful for this change.
+> The AI reviews were faster and useful as a clean second opinion, but the manual
+> review was more informative in this stack because Graphite left no comments. A
+> specific example is Task 1: my review identified both silently accepted invalid
+> sort fields and unstable ordering when records shared the same sort value.
+> Graphite reported no issues on that PR. Likewise, Graphite did not mention Task
+> 3's lack of a migration for an existing database or the need to define project
+> deletion behavior. Graphite was not wrong—tests and linting passed—but it did not
+> add findings beyond the manual review.
 
 d. Your comfort level trusting AI reviews going forward and any heuristics for when to rely on them.
 > I am comfortable using AI review as a second reviewer, but not as the approval
