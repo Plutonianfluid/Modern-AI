@@ -28,6 +28,10 @@ def test_create_complete_list_and_patch_action_item(client):
 
 def test_action_item_validation_and_missing_resources(client):
     assert client.post("/action-items/", json={"description": ""}).status_code == 422
+    assert (
+        client.post("/action-items/", json={"description": "orphan", "project_id": 999}).status_code
+        == 404
+    )
     assert client.put("/action-items/999/complete").status_code == 404
     assert client.patch("/action-items/999", json={"completed": True}).status_code == 404
     assert client.delete("/action-items/999").status_code == 404
